@@ -65,11 +65,6 @@
 
 #if !defined(MBEDTLS_RSA_ALT)
 
-/* Parameter validation macros */
-#define RSA_VALIDATE_RET( cond )                                       \
-    MBEDTLS_INTERNAL_VALIDATE_RET( cond, MBEDTLS_ERR_RSA_BAD_INPUT_DATA )
-#define RSA_VALIDATE( cond )                                           \
-    MBEDTLS_INTERNAL_VALIDATE( cond )
 
 int mbedtls_rsa_import( mbedtls_rsa_context *ctx,
                         const mbedtls_mpi *N,
@@ -1513,9 +1508,10 @@ static int rsa_rsassa_pss_sign( mbedtls_rsa_context *ctx,
     size_t msb;
     const mbedtls_md_info_t *md_info;
     mbedtls_md_context_t md_ctx;
-    RSA_VALIDATE_RET( ( md_alg  == MBEDTLS_MD_NONE &&
-                        hashlen == 0 ) ||
-                      hash != NULL );
+    if( ( md_alg != MBEDTLS_MD_NONE ||
+        hashlen != 0 ) &&
+        hash == NULL )
+        return MBEDTLS_ERR_RSA_BAD_INPUT_DATA;
 
     if( ctx->padding != MBEDTLS_RSA_PKCS_V21 )
         return( MBEDTLS_ERR_RSA_BAD_INPUT_DATA );
@@ -1805,9 +1801,10 @@ int mbedtls_rsa_rsassa_pkcs1_v15_sign( mbedtls_rsa_context *ctx,
     int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;
     unsigned char *sig_try = NULL, *verif = NULL;
 
-    RSA_VALIDATE_RET( ( md_alg  == MBEDTLS_MD_NONE &&
-                        hashlen == 0 ) ||
-                      hash != NULL );
+    if( ( md_alg != MBEDTLS_MD_NONE ||
+        hashlen != 0 ) &&
+        hash == NULL )
+        return MBEDTLS_ERR_RSA_BAD_INPUT_DATA;
 
     if( ctx->padding != MBEDTLS_RSA_PKCS_V15 )
         return( MBEDTLS_ERR_RSA_BAD_INPUT_DATA );
@@ -1871,9 +1868,10 @@ int mbedtls_rsa_pkcs1_sign( mbedtls_rsa_context *ctx,
                     const unsigned char *hash,
                     unsigned char *sig )
 {
-    RSA_VALIDATE_RET( ( md_alg  == MBEDTLS_MD_NONE &&
-                        hashlen == 0 ) ||
-                      hash != NULL );
+    if( ( md_alg != MBEDTLS_MD_NONE ||
+        hashlen != 0 ) &&
+        hash == NULL )
+        return MBEDTLS_ERR_RSA_BAD_INPUT_DATA;
 
     switch( ctx->padding )
     {
@@ -1918,9 +1916,10 @@ int mbedtls_rsa_rsassa_pss_verify_ext( mbedtls_rsa_context *ctx,
     mbedtls_md_context_t md_ctx;
     unsigned char buf[MBEDTLS_MPI_MAX_SIZE] = {0};
 
-    RSA_VALIDATE_RET( ( md_alg  == MBEDTLS_MD_NONE &&
-                        hashlen == 0 ) ||
-                      hash != NULL );
+    if( ( md_alg != MBEDTLS_MD_NONE ||
+        hashlen != 0 ) &&
+        hash == NULL )
+        return MBEDTLS_ERR_RSA_BAD_INPUT_DATA;
 
     siglen = ctx->len;
 
@@ -2044,9 +2043,10 @@ int mbedtls_rsa_rsassa_pss_verify( mbedtls_rsa_context *ctx,
                            const unsigned char *sig )
 {
     mbedtls_md_type_t mgf1_hash_id;
-    RSA_VALIDATE_RET( ( md_alg  == MBEDTLS_MD_NONE &&
-                        hashlen == 0 ) ||
-                      hash != NULL );
+    if( ( md_alg != MBEDTLS_MD_NONE ||
+        hashlen != 0 ) &&
+        hash == NULL )
+        return MBEDTLS_ERR_RSA_BAD_INPUT_DATA;
 
     mgf1_hash_id = ( ctx->hash_id != MBEDTLS_MD_NONE )
                              ? (mbedtls_md_type_t) ctx->hash_id
@@ -2075,9 +2075,10 @@ int mbedtls_rsa_rsassa_pkcs1_v15_verify( mbedtls_rsa_context *ctx,
     size_t sig_len;
     unsigned char *encoded = NULL, *encoded_expected = NULL;
 
-    RSA_VALIDATE_RET( ( md_alg  == MBEDTLS_MD_NONE &&
-                        hashlen == 0 ) ||
-                      hash != NULL );
+    if( ( md_alg != MBEDTLS_MD_NONE ||
+        hashlen != 0 ) &&
+        hash == NULL )
+        return MBEDTLS_ERR_RSA_BAD_INPUT_DATA;
 
     sig_len = ctx->len;
 
@@ -2142,9 +2143,10 @@ int mbedtls_rsa_pkcs1_verify( mbedtls_rsa_context *ctx,
                       const unsigned char *hash,
                       const unsigned char *sig )
 {
-    RSA_VALIDATE_RET( ( md_alg  == MBEDTLS_MD_NONE &&
-                        hashlen == 0 ) ||
-                      hash != NULL );
+    if( ( md_alg != MBEDTLS_MD_NONE ||
+        hashlen != 0 ) &&
+        hash == NULL )
+        return MBEDTLS_ERR_RSA_BAD_INPUT_DATA;
 
     switch( ctx->padding )
     {
