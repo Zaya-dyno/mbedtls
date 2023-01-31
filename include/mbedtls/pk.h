@@ -28,6 +28,10 @@
 
 #include "mbedtls/md.h"
 
+#if defined(MBEDTLS_CRYSTAL_C)
+#include "mbedtls/crystal.h"
+#endif
+
 #if defined(MBEDTLS_RSA_C)
 #include "mbedtls/rsa.h"
 #endif
