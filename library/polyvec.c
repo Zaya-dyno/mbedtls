@@ -335,10 +335,10 @@ void poly_frommsg(poly *r, unsigned char *msg)
   unsigned int i,j;
   int16_t mask;
 
-  for(i=0;i<KYBER_N/8;i++) {
+  for(i=0;i<MBEDTLS_CRYSTAL_KYBER_N/8;i++) {
     for(j=0;j<8;j++) {
       mask = -(int16_t)((msg[i] >> j)&1);
-      r->coeffs[8*i+j] = mask & ((KYBER_Q+1)/2);
+      r->coeffs[8*i+j] = mask & ((MBEDTLS_CRYSTAL_KYBER_Q+1)/2);
     }
   }
 }
@@ -348,4 +348,3 @@ int16_t csubq(int16_t a){
     a += (a >> 15) & MBEDTLS_CRYSTAL_KYBER_Q;
     return a;
 }
-

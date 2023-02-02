@@ -26,7 +26,7 @@ int parse(unsigned int *buf, size_t buf_len, poly *a_ntt,size_t * size){
     int d_1,d_2;
 	i = 0;
 
-	while ( *size < MBEDTL_CRYSTAL_KYBER_N && i < buf_len){
+	while ( *size < MBEDTL_CRYSTAL_KYBER_N && i + 2 < buf_len){
 		d_1 = buf[i] + 256 * (buf[i+1] % 16);
 		d_2 = buf[i+1] / 16 + 16 * buf[i+2];
 
@@ -188,7 +188,7 @@ int cpapke_keygen(int (*f_rng)(void *, unsigned char *, size_t),
 
 
 	for (i = 0; i < MBEDTLS_CRYSTAL_KYBER_K; i++){
-        GET_POLY_FROM_NOISE_ETA2(beta,&s->vec[i]);
+        GET_POLY_FROM_NOISE_ETA2(beta,&e->vec[i]);
 	    *nonce = *nonce + 1;
 	}
 
@@ -258,13 +258,14 @@ int cpapke_enc(unsigned char *pk,
         poly_tomont(&u.vec[i]);
     }
     
-    polyvec_add(&u,&e_1,&u);
     polyvec_intt(&u);
+    polyvec_add(&u,&e_1,&u);
 
     polyvec_pointwise_acc_montgomery(&v,&t,&r);
+    polyvec_intt(&v)
     polytomont(&v);
     poly_add(&v,&e_2,&v);
-    poly_add(&v,&v,&k)
+    poly_add(&v,&v,&k);
 
 	pack_ciphertext(ct,u,v);
 }
