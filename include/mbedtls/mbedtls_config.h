@@ -25,6 +25,17 @@
  */
 
 /**
+ * \def MBEDTLS_KYBER
+ *
+ * Enable crystal kyber.
+ * 
+ * Module: library/kyber.c
+ *
+ * This module adds support for Kyber
+ */
+#define MBEDTLS_KYBER_C
+
+/**
  * This is an optional version symbol that enables compatibility handling of
  * config files.
  *

@@ -92,16 +92,6 @@ int create_matrix(int transposed, poly_matrix *A, unsigned char * alpha){
 }
 
 
-int cbd(unsigned int eta, unsigned char * in, poly * out){
-    if (eta == 2){
-        cbd_2(in,out);
-    } else if (eta == 3){
-        cbd_3(in,out);
-    } else {
-        return MBEDTLS_CRYSTAL_KYBER_ERROR;
-    }
-}
-
 int cbd_2(unsigned char * in, poly * out) {
     unsigned char *hash[2 * 64];
     unsigned int i;

@@ -93,6 +93,7 @@
  * DHM       3   11
  * PK        3   15 (Started from top)
  * RSA       4   11
+ * KYBER     4   5  (Started from 0x4600)
  * ECP       4   10 (Started from top)
  * MD        5   5
  * HKDF      5   1 (Started from top)

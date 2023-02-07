@@ -28,8 +28,8 @@
 
 #include "mbedtls/md.h"
 
-#if defined(MBEDTLS_CRYSTAL_C)
-#include "mbedtls/crystal.h"
+#if defined(MBEDTLS_KYBER_C)
+#include "mbedtls/kyber.h"
 #endif
 
 #if defined(MBEDTLS_RSA_C)

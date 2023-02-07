@@ -109,6 +109,7 @@ OBJS_CRYPTO= \
 	     hash_info.o \
 	     hkdf.o \
 	     hmac_drbg.o \
+		 kyber.o \
 	     md.o \
 	     md5.o \
 	     memory_buffer_alloc.o \
